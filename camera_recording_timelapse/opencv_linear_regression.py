@@ -25,9 +25,23 @@ def process_video(video_path):
         if not ret:
             break
 
-        image = cv2.resize(frame, (100, 100), interpolation=cv2.INTER_AREA)
-        grayscale_values.append(image.astype("float32").mean()/255)
+        h, w, _ = frame.shape
 
+        square_size = min(h, w)
+
+        x_start = w // 2 - square_size // 2
+        y_start = h // 2 - square_size // 2
+        x_end = x_start + square_size
+        y_end = y_start + square_size
+
+        square_frame = frame[y_start:y_end, x_start:x_end]
+
+        square_frame = cv2.resize(square_frame, (100, 100), interpolation=cv2.INTER_AREA)
+
+        grayscale_values.append(square_frame.astype("float32").mean() / 255)
+
+
+    # Release the video capture object and close any OpenCV windows
     cap.release()
 
     return grayscale_values
