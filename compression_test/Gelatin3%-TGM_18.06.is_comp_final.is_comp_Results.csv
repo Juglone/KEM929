@@ -1,0 +1,28 @@
+Export Results : Content,Results and Statistics
+Export Results : Export results,True
+Dimension : Geometry,Circular
+Dimension : Diameter,12.00000,mm
+Dimension : Anvil height,10.00000,mm
+"General : Method description,""Compression test for gelatine gels"""
+"General : Method Name,""D:\Instron measurements\Julia M\JuliaCompressionmethod_18.06.im_comp"""
+
+Results Table 1
+,Diameter,Specimen label,Axial Gauge Length (Strain Source),Anvil height,Compressive load at Break (Standard),Load at Break (Standard),Load at Yield (Zero Slope),Maximum Slope (Automatic Young's),Modulus (Automatic),Compressive load at Yield (Zero Slope),Extension at Yield (Zero Slope),Compressive strain at Break (Standard),Compressive stress at Break (Standard)
+,(mm),,,(mm),(N),(N),(N),(MPa/mm/mm),(MPa),(N),(mm),(mm/mm),(MPa)
+"1,12.00000,"""",-10.00000,10.00000,1.53724,-1.53724,-1.31523,0.10981,0.05774,1.31523,-32.32613,0.80174,0.01359"
+"2,12.00000,"""",-10.00000,10.00000,3.11802,-3.11802,-0.13864,0.12813,0.00636,0.13864,-28.15685,0.80003,0.02757"
+"3,12.00000,"""",-10.00000,10.00000,2.28065,-2.28065,-0.08057,0.28782,0.01069,0.08057,-27.34469,0.80115,0.02017"
+"4,12.00000,"""",-10.00000,10.00000,3.44631,-3.44631,,0.32797,0.18145,,,0.80201,0.03047"
+"5,12.00000,"""",-10.00000,10.00000,2.82677,-2.82677,-1.25898,0.28270,0.19546,1.25898,-29.24450,0.80236,0.02499"
+Mean,12.00000,,-10.00000,10.00000,2.64180,-2.64180,-0.69836,0.22729,0.09034,0.69836,-29.26804,0.80146,0.02336
+Standard Deviation,0.00000,,0.00000,0.00000,0.75145,0.75145,0.68063,0.10063,0.09194,0.68063,2.18224,0.00091,0.00664
+Coefficient of Variation,0.00000,,0.00000,0.00000,28.44464,-28.44464,-97.46157,44.27534,101.76920,97.46157,-7.45605,0.11377,28.44464
+
+Results Table 2
+,Compressive extension at Break (Standard),Compressive load at Break (Standard),Compressive strain at Break (Standard),Compressive stress at Break (Standard)
+,(mm),(N),(mm/mm),(MPa)
+1,8.01737,1.53724,0.80174,0.01359
+2,8.00030,3.11802,0.80003,0.02757
+3,8.01152,2.28065,0.80115,0.02017
+4,8.02014,3.44631,0.80201,0.03047
+5,8.02355,2.82677,0.80236,0.02499

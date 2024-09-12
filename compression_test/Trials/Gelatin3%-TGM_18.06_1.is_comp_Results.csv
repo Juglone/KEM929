@@ -1,0 +1,23 @@
+Export Results : Content,Results and Statistics
+Export Results : Export results,True
+Dimension : Geometry,Circular
+Dimension : Diameter,12.00000,mm
+Dimension : Anvil height,10.00000,mm
+General : Method description,"Compression test for gelatine gels"
+General : Method Name,"D:\Instron measurements\Julia M\JuliaCompressionmethod_18.06.im_comp"
+
+Results Table 1
+,Diameter,Specimen label,Axial Gauge Length (Strain Source),Anvil height,Compressive load at Break (Standard),Load at Break (Standard),Load at Yield (Zero Slope),Maximum Slope (Automatic Young's),Modulus (Automatic),Compressive load at Yield (Zero Slope),Extension at Yield (Zero Slope),Compressive strain at Break (Standard),Compressive stress at Break (Standard)
+,(mm),,,(mm),(N),(N),(N),(MPa/mm/mm),(MPa),(N),(mm),(mm/mm),(MPa)
+1,12.00000,"",-10.00000,10.00000,2.42633,-2.42633,-0.07857,0.18192,0.13871,0.07857,7.72725,0.81119,0.02145
+2,12.00000,"",-10.00000,10.00000,2.82413,-2.82413,,0.31057,0.16230,,,0.81652,0.02497
+Mean,12.00000,,-10.00000,10.00000,2.62523,-2.62523,-0.07857,0.24625,0.15050,0.07857,7.72725,0.81385,0.02321
+Standard Deviation,0.00000,,0.00000,0.00000,0.28129,0.28129,,0.09097,0.01668,,,0.00377,0.00249
+Coefficient of Variation,0.00000,,0.00000,0.00000,10.71479,-10.71480,,36.94238,11.08289,,,0.46346,10.71480
+
+Results Table 2
+,Compressive extension at Break (Standard),Compressive load at Break (Standard),Compressive strain at Break (Standard),Compressive stress at Break (Standard)
+,(mm),(N),(mm/mm),(MPa)
+1,8.11186,2.42633,0.81119,0.02145
+2,8.16520,2.82413,0.81652,0.02497
+
