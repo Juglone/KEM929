@@ -97,6 +97,8 @@ def process_video(video_path):
 def plot_values(video_path, grayscale_values):
     # Convert list to numpy array
     grayscale_values = np.array(grayscale_values)
+    CLAMP = 0.001
+    grayscale_values = np.cumsum(np.clip(np.diff(grayscale_values), a_min=-CLAMP, a_max=CLAMP))
     hours = np.arange(len(grayscale_values)) * 200 / (30 * 3600)  # Adjusted time calculation if needed
 
     # Perform linear regression using scipy
