@@ -17,11 +17,8 @@ def process_video(video_path):
         print(f"Could not open the video: {video_path}")
         exit()
 
-    grayscale_values = []
+    cv_metric_values = []
 
-    for _ in range(1000):
-        cap.read() # skip some starting frames
-        # TODO remove
     MASK_RETAIN = 40
     retained_masks = None
     next_mask_index = 0
@@ -86,23 +83,25 @@ def process_video(video_path):
             cv2.imshow("mask", mask)
             cv2.waitKey(25)
 
-        mean_val = cv2.mean(square_frame, mask=mask)[0] / 255
-        grayscale_values.append(mean_val)
+        val = cv2.cvtColor(square_frame, cv2.COLOR_RGB2HSV)[:, :, 1].astype("float32")
+        val = cv2.mean(val, mask=mask)[0] / 255
+        cv_metric_values.append(val)
 
     # Release the video capture object
     cap.release()
 
-    return grayscale_values
+    return video_path, cv_metric_values
 
-def plot_values(video_path, grayscale_values):
+def plot_values(video_path, cv_metric_values):
     # Convert list to numpy array
-    grayscale_values = np.array(grayscale_values)
+    cv_metric_values = np.array(cv_metric_values)
     CLAMP = 0.001
-    grayscale_values = np.cumsum(np.clip(np.diff(grayscale_values), a_min=-CLAMP, a_max=CLAMP))
-    hours = np.arange(len(grayscale_values)) * 200 / (30 * 3600)  # Adjusted time calculation if needed
+    cv_metric_values = np.cumsum(np.clip(np.diff(cv_metric_values), a_min=-CLAMP, a_max=CLAMP))
+    print(f"{len(cv_metric_values) = }")
+    hours = np.arange(len(cv_metric_values)) * 200 / (30 * 3600)  # Adjusted time calculation if needed
 
     # Perform linear regression using scipy
-    slope, intercept, r_value, p_value, std_err = scipy.stats.linregress(hours, grayscale_values)
+    slope, intercept, r_value, p_value, std_err = scipy.stats.linregress(hours, cv_metric_values)
 
     # Extract relevant parts of file name
     parts = video_path.split('_')
@@ -117,19 +116,20 @@ def plot_values(video_path, grayscale_values):
 
     # Plot grayscale values over time with linear regression line
     plt.figure(figsize=(10, 6))
-    plt.plot(hours, grayscale_values, label='Data', linestyle='-')
+    plt.plot(hours, cv_metric_values, label='Data', linestyle='-')
     plt.plot(hours, slope * hours + intercept, 'r', label=f'Linear Fit (slope={slope:.4f})')
     plt.xlabel('Hours')
-    plt.ylabel('Average Grayscale Value')
+    plt.ylabel('Value')
     title_text = (
-        f"Grayscale Value Over Time ignoring bubbles for Gel in a Medium with {pH_value} and {IS_value}, \n"
+        f"CV-metric Over Time ignoring bubbles for Gel in a Medium with {pH_value} and {IS_value}, \n"
         f"{condition}, {date}"
     )
     plt.title(title_text)
     plt.legend()
 
     # Save plot to folder
-    output_folder = "bubble_graphs"
+    #output_folder = "bubble_graphs_discontinous"
+    output_folder = "bubble_graph"
     output_filename = "bubble_" + os.path.splitext(os.path.basename(video_path))[0] + ".png"
     output_path = os.path.join(output_folder, output_filename)
 
@@ -154,9 +154,10 @@ def main():
 
     DEBUG = (mode == "rerun-debug")
 
+    cache = {}
     if mode == "rerun" or mode == "rerun-debug":
         with Pool(processes=16) as pool:
-            cache = pool.map(process_video, video_paths)
+            cache = dict(pool.map(process_video, video_paths))
         with open("cache.json", "w") as f:
             json.dump(cache, f)
     elif mode == "cache":
@@ -169,8 +170,8 @@ def main():
         print("First argument must be 'rerun' or 'cache'")
         sys.exit(1)
 
-    slopes = {video_path: plot_values(video_path, gs_values)
-              for video_path, gs_values in zip(video_paths, cache)}
+    slopes = {video_path: plot_values(video_path, cache[video_path])
+              for video_path in video_paths}
 
     for video_path, slope in slopes.items():
         print(f"Video: {video_path}, Slope: {slope}")
