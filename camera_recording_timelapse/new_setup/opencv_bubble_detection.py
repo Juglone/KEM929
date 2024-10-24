@@ -8,6 +8,12 @@ import os
 from multiprocessing import Pool
 
 DEBUG = False
+plt.rcParams['font.size'] = 20
+MARGIN = 0.15
+plt.rcParams['figure.subplot.left'] = MARGIN
+plt.rcParams['figure.subplot.bottom'] = MARGIN
+plt.rcParams['figure.subplot.top'] = 1 - MARGIN * 2 / 3
+plt.rcParams['figure.subplot.right'] = 1 - MARGIN / 4
 
 def process_video(video_path):
     global DEBUG
@@ -105,31 +111,38 @@ def plot_values(video_path, cv_metric_values):
 
     # Extract relevant parts of file name
     parts = video_path.split('_')
-    pH_value = parts[0]
-    IS_value = parts[1].replace('-', ' ')
-    if parts[2] == "without":
-        condition = f"{parts[2]} {parts[3]}"
-        date = parts[4]
-    else:
-        condition = f"{parts[2]} {parts[3]} {parts[4]}"
-        date = parts[5]
+    name = ""
+    name += {
+        "pH1.5": "1.5",
+        "pH3": "3",
+        "pH7": "7",
+    }[parts[0]]
+    name += {
+        "IS-0": "O",
+        "IS-S": "S",
+        "IS-I": "I",
+    }[parts[1]]
+    name += {
+        "pepsin": "p",
+        "nopepsin": "",
+    }[parts[2]]
+    date = parts[3]
+    version = parts[4].split(".")[0]
+
 
     # Plot grayscale values over time with linear regression line
     plt.figure(figsize=(10, 6))
     plt.plot(hours, cv_metric_values, label='Data', linestyle='-')
-    plt.plot(hours, slope * hours + intercept, 'r', label=f'Linear Fit (slope={slope:.4f})')
+    plt.plot(hours, slope * hours + intercept, 'r', label=f'Slope={slope:.4f}')
     plt.xlabel('Hours')
     plt.ylabel('Value')
-    title_text = (
-        f"CV-metric Over Time ignoring bubbles for Gel in a Medium with {pH_value} and {IS_value}, \n"
-        f"{condition}, {date}"
-    )
+    title_text = f"{name}, {date}{version}"
     plt.title(title_text)
     plt.legend()
 
     # Save plot to folder
     #output_folder = "bubble_graphs_discontinous"
-    output_folder = "bubble_graph"
+    output_folder = "bubble_graphs"
     output_filename = "bubble_" + os.path.splitext(os.path.basename(video_path))[0] + ".png"
     output_path = os.path.join(output_folder, output_filename)
 
