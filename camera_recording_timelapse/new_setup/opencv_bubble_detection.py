@@ -125,6 +125,7 @@ def plot_values(video_path, cv_metric_values):
     name += {
         "pepsin": "p",
         "nopepsin": "",
+        "nogel": " blank"
     }[parts[2]]
     date = parts[3]
     version = parts[4].split(".")[0]
