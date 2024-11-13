@@ -102,7 +102,7 @@ def plot_values(video_path, cv_metric_values):
     # Convert list to numpy array
     cv_metric_values = np.array(cv_metric_values)
     CLAMP = 0.001
-    cv_metric_values = np.cumsum(np.clip(np.diff(cv_metric_values), a_min=-CLAMP, a_max=CLAMP))
+    #cv_metric_values = np.cumsum(np.clip(np.diff(cv_metric_values), a_min=-CLAMP, a_max=CLAMP))
     print(f"{len(cv_metric_values) = }")
     hours = np.arange(len(cv_metric_values)) * 200 / (30 * 3600)  # Adjusted time calculation if needed
 
@@ -142,8 +142,8 @@ def plot_values(video_path, cv_metric_values):
     plt.legend()
 
     # Save plot to folder
-    #output_folder = "bubble_graphs_discontinous"
-    output_folder = "bubble_graphs"
+    output_folder = "bubble_graphs_discontinous"
+    #output_folder = "bubble_graphs"
     output_filename = "bubble_" + os.path.splitext(os.path.basename(video_path))[0] + ".png"
     output_path = os.path.join(output_folder, output_filename)
 
